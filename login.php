@@ -1,7 +1,12 @@
 <?php
 
-
 session_start();
+
+//se la sessione è già presente => location dashboard
+if (isset($_SESSION["username"])) {
+    header("Location: dashboard.php");
+    exit();
+}
 
 $admin_username = "admin"; 
 $admin_password = "password123";
@@ -18,7 +23,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
         $error = "invalid username";  
     }
 
-    if($admin_username === $username && $admin_password ===$password){
+    elseif($admin_username === $username && $admin_password ===$password){
         session_regenerate_id(true); 
         
         //salviamo l'username come dato di sessione (quello che inseriamo all'interno dell'input)
@@ -57,16 +62,13 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
        
     <form method="POST">
-         <label for="username">Inserisci il tuo username</label>
-        <input type="text" id="username" name="username" required>
-        <label for="password">Inserisci la password del tuo account</label>
-        <input type="password" id="password" name="password" required>
+         <label for="username">Inserisci il tuo username</label><br>
+        <input type="text" id="username" name="username" required><br>
+        <label for="password">Inserisci la password del tuo account</label><br>
+        <input type="password" id="password" name="password" required><br>
+            <br>
         <button type="submit">Invia</button>
         
     </form>
 </body>
 </html>
-
-
-
-
